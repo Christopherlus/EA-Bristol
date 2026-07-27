@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Sansation:wght@300;400;700&amp;family=Merriweather:ital,wght@0,300;0,400;0,700;1,400;1,700&amp;family=Hanken+Grotesk:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:#f7f9fb;color:#13191b;font-family:'Radnika Next','Hanken Grotesk',sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  a{color:inherit}
+  ::selection{background:#ccf0f2;color:#0c4a50}
+  @keyframes eab-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @keyframes eab-fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</helmet>
+
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" data-bg-color="#059ea9"><rect width="200" height="200" fill="#059ea9"></rect><g fill="none" stroke="#f7f9fb" stroke-width="4" stroke-linecap="round"><circle cx="100" cy="100" r="42"></circle><path d="M76 130 L76 160 M124 130 L124 160 M84 160 L116 160"></path><path d="M80 100 Q100 60 120 100 M88 92 L88 108 M100 84 L100 116 M112 92 L112 108"></path></g></svg></template>
+<div id="top" style="font-family:'Radnika Next','Hanken Grotesk',sans-serif;color:#13191b;overflow-x:hidden">
+
+  <!-- ===================== NAV ===================== -->
+  <header style="position:sticky;top:0;z-index:50;background:rgba(247,249,251,0.82);backdrop-filter:saturate(180%) blur(14px);-webkit-backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid #e6edf0">
+    <nav style="max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+      <a onClick="{{ goHero }}" style="display:flex;align-items:center;gap:11px;cursor:pointer;text-decoration:none">
+        <img src="assets/logo-teal.png" alt="EA Bristol logo" style="width:34px;height:34px;object-fit:contain">
+        <span style="font-family:'Sansation',sans-serif;font-weight:700;font-size:18px;letter-spacing:-0.01em;color:#13191b">EA Bristol</span>
+      </a>
+
+      <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;align-items:center;gap:30px">
+          <a onClick="{{ goPrograms }}" style="cursor:pointer;font-size:15px;font-weight:500;color:#3b4a52;text-decoration:none">Programs</a>
+          <a onClick="{{ goMentors }}" style="cursor:pointer;font-size:15px;font-weight:500;color:#3b4a52;text-decoration:none">Mentors</a>
+          <a onClick="{{ goTeam }}" style="cursor:pointer;font-size:15px;font-weight:500;color:#3b4a52;text-decoration:none">Team</a>
+          <a onClick="{{ goInvolved }}" style="cursor:pointer;font-family:'Sansation',sans-serif;font-weight:700;font-size:15px;color:#fff;background:#059ea9;padding:10px 20px;border-radius:9px;text-decoration:none;white-space:nowrap" style-hover="background:#047d86">Get involved</a>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ toggleMenu }}" aria-label="Menu" style="display:flex;flex-direction:column;justify-content:center;gap:5px;width:44px;height:44px;background:transparent;border:1px solid #d3dde2;border-radius:10px;cursor:pointer;padding:0 11px">
+          <span style="height:2px;background:#13191b;border-radius:2px"></span>
+          <span style="height:2px;background:#13191b;border-radius:2px"></span>
+          <span style="height:2px;background:#13191b;border-radius:2px"></span>
+        </button>
+      </sc-if>
+    </nav>
+
+    <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+      <div style="border-top:1px solid #e6edf0;background:#f7f9fb;padding:8px 24px 18px;display:flex;flex-direction:column;gap:4px">
+        <a onClick="{{ goPrograms }}" style="cursor:pointer;padding:13px 4px;font-size:17px;font-weight:600;border-bottom:1px solid #eef3f5;text-decoration:none">Programs</a>
+        <a onClick="{{ goMentors }}" style="cursor:pointer;padding:13px 4px;font-size:17px;font-weight:600;border-bottom:1px solid #eef3f5;text-decoration:none">Mentors</a>
+        <a onClick="{{ goTeam }}" style="cursor:pointer;padding:13px 4px;font-size:17px;font-weight:600;border-bottom:1px solid #eef3f5;text-decoration:none">Team</a>
+        <a onClick="{{ goInvolved }}" style="cursor:pointer;margin-top:10px;text-align:center;font-family:'Sansation',sans-serif;font-weight:700;font-size:16px;color:#fff;background:#059ea9;padding:13px;border-radius:10px;text-decoration:none">Get involved</a>
+      </div>
+    </sc-if>
+  </header>
+
+  <!-- ===================== HERO ===================== -->
+  <section style="position:relative;max-width:1200px;margin:0 auto;padding:clamp(48px,7vw,96px) 24px clamp(40px,6vw,72px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:clamp(36px,5vw,72px);align-items:center">
+    <div style="animation:eab-fade .6s ease both">
+      <div style="display:inline-flex;align-items:center;gap:9px;font-family:'Sansation',sans-serif;font-weight:700;font-size:12.5px;letter-spacing:0.16em;text-transform:uppercase;color:#059ea9;background:#ccf0f2;padding:7px 13px;border-radius:100px;margin-bottom:24px">
+        <span style="width:6px;height:6px;border-radius:50%;background:#059ea9"></span>Effective Altruism · University of Bristol
+      </div>
+      <h1 style="font-family:'Sansation',sans-serif;font-weight:700;font-size:clamp(38px,5.4vw,62px);line-height:1.02;letter-spacing:-0.02em;margin:0 0 22px;color:#13191b">Figure out where your effort actually matters.<br><span style="color:#059ea9">Then go do it.</span></h1>
+      <p style="font-family:'Radnika Next','Hanken Grotesk',sans-serif;font-size:clamp(17px,1.7vw,20px);line-height:1.6;color:#46555d;max-width:540px;margin:0 0 32px">EA Bristol runs projects, mentorship, and a working community for students who want their career and their free time to count for something. No prerequisite in moral philosophy required.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:14px">
+        <a onClick="{{ goPrograms }}" style="cursor:pointer;font-family:'Sansation',sans-serif;font-weight:700;font-size:16px;color:#fff;background:#059ea9;padding:15px 28px;border-radius:11px;text-decoration:none;white-space:nowrap;box-shadow:0 8px 22px -8px rgba(5,158,169,0.55)" style-hover="background:#047d86">See what we run</a>
+        <a onClick="{{ goInvolved }}" style="cursor:pointer;font-family:'Sansation',sans-serif;font-weight:700;font-size:16px;color:#0c5860;background:transparent;border:1.5px solid #aed9dd;padding:15px 28px;border-radius:11px;text-decoration:none;white-space:nowrap" style-hover="background:#ccf0f2;border-color:#059ea9">Get involved</a>
+      </div>
+    </div>
+
+    <div style="position:relative;display:flex;align-items:center;justify-content:center;min-height:300px">
+      <div style="position:absolute;width:min(108%,460px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 50% 42%,#ccf0f2 0%,#dcf4f6 45%,rgba(220,244,246,0) 72%)"></div>
+      <div style="position:absolute;width:min(86%,360px);aspect-ratio:1;border-radius:50%;border:1px dashed #a9dde2"></div>
+      <div style="position:absolute;width:min(70%,290px);aspect-ratio:1;border-radius:50%;border:1px solid #c3e9ec"></div>
+      <img src="assets/logo-teal.png" alt="Suspension-bridge lightbulb — EA Bristol mark" style="position:relative;width:min(52%,210px);height:auto;animation:eab-float 6s ease-in-out infinite;filter:drop-shadow(0 18px 30px rgba(5,158,169,0.22))">
+    </div>
+  </section>
+
+  <!-- ===================== STAT BAND ===================== -->
+  <section style="background:#059ea9;color:#fff">
+    <div style="max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,44px) 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:24px;text-align:center">
+      <div>
+        <div style="font-family:'Sansation',sans-serif;font-weight:700;font-size:clamp(34px,4.4vw,48px);line-height:1;letter-spacing:-0.01em">4</div>
+        <div style="font-size:14.5px;color:#d6f3f5;margin-top:8px;font-weight:500">Hands-on programs</div>
+      </div>
+      <div style="border-left:1px solid rgba(255,255,255,0.18);border-right:1px solid rgba(255,255,255,0.18)">
+        <div style="font-family:'Sansation',sans-serif;font-weight:700;font-size:clamp(34px,4.4vw,48px);line-height:1;letter-spacing:-0.01em">1:1</div>
+        <div style="font-size:14.5px;color:#d6f3f5;margin-top:8px;font-weight:500">Mentor pairings</div>
+      </div>
+      <div>
+        <div style="font-family:'Sansation',sans-serif;font-weight:700;font-size:clamp(34px,4.4vw,48px);line-height:1;letter-spacing:-0.01em">Open</div>
+        <div style="font-size:14.5px;color:#d6f3f5;margin-top:8px;font-weight:500">To every year &amp; subject</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROGRAMS ===================== -->
+  <section id="programs" style="max-width:1200px;margin:0 auto;padding:clamp(64px,8vw,112px) 24px">
+    <div style="max-width:660px;margin-bottom:clamp(36px,4vw,56px)">
+      <div style="font-family:'Sansation',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.16em;text-transform:uppercase;color:#059ea9;margin-bottom:14px">What we run</div>
+      <h2 style="font-family:'Sansation',sans-serif;font-weight:700;font-size:clamp(30px,4vw,46px);line-height:1.04;letter-spacing:-0.015em;margin:0 0 16px;color:#13191b">Four things, all hands-on.</h2>
+      <p style="font-size:clamp(16px,1.5vw,18px);line-height:1.6;color:#46555d;margin:0">Pick a problem, work it with people who care about getting it right, and find out fast whether this is for you. None of it is ordered by priority; start wherever you fit.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:20px">
+
+      <!-- Program card -->
+      <div style="position:relative;background:#fff;border:1px solid #e6edf0;border-radius:18px;padding:30px 28px 30px;overflow:hidden;transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease" style-hover="transform:translateY(-4px);box-shadow:0 22px 40px -24px rgba(19,25,27,0.28);border-color:#aed9dd">
+        <img src="assets/logo-teal.png" alt="" aria-hidden="true" style="position:absolute;top:-26px;right:-26px;width:120px;height:auto;opacity:0.06">
+        <span style="display:inline-block;font-family:'Sansation',sans-serif;font-weight:700;font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;color:#0c7a83;background:#ccf0f2;padding:6px 11px;border-radius:100px;margin-bottom:18px;white-space:nowrap">For new members</span>
+        <h3 style="font-family:'Sansation',sans-serif;font-weight:700;font-size:23px;letter-spacing:-0.01em;margin:0 0 8px;color:#13191b">Intro Project Program</h3>
+        <p style="font-family:'Merriweather',serif;font-style:italic;font-weight:400;font-size:16px;line-height:1.45;color:#059ea9;margin:0 0 14px">Test the ideas with your hands, not just your highlighter.</p>
+        <p style="font-size:15.5px;line-height:1.62;color:#46555d;margin:0">Pick a real problem, work it with a small team, and see if this is actually for you. A short, structured project for people new to EA who want to try the ideas out rather than read about them first.</p>
+      </div>
+
+      <div style="position:relative;background:#fff;border:1px solid #e6edf0;border-radius:18px;padding:30px 28px 30px;overflow:hidden;transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease" style-hover="transform:translateY(-4px);box-shadow:0 22px 40px -24px rgba(19,25,27,0.28);border-color:#aed9dd">
+        <img src="assets/logo-teal.png" alt="" aria-hidden="true" style="position:absolute;top:-26px;right:-26px;width:120px;height:auto;opacity:0.06">
+        <span style="display:inline-block;font-family:'Sansation',sans-serif;font-weight:700;font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;color:#0c7a83;background:#ccf0f2;padding:6px 11px;border-radius:100px;margin-bottom:18px;white-space:nowrap">One-to-one</span>
+        <h3 style="font-family:'Sansation',sans-serif;font-weight:700;font-size:23px;letter-spacing:-0.01em;margin:0 0 8px;color:#13191b">Mentor Program</h3>
+        <p style="font-family:'Merriweather',serif;font-style:italic;font-weight:400;font-size:16px;line-height:1.45;color:#059ea9;margin:0 0 14px">A straight answer from someone who's actually walked the path.</p>
+        <p style="font-size:15.5px;line-height:1.62;color:#46555d;margin:0">Paired one-to-one with someone further along in research, policy, or industry who can tell you what a path actually looks like. Built around regular check-ins, not a one-off coffee chat.</p>
+      </div>
+
+      <div style="position:relative;background:#fff;border:1px solid #e6edf0;border-radius:18px;padding:30px 28px 30px;overflow:hidden;transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease" style-hover="transform:translateY(-4px);box-shadow:0 22px 40px -24px rgba(19,25,27,0.28);border-color:#aed9dd">
+        <img src="assets/logo-teal.png" alt="" aria-hidden="true" style="position:absolute;top:-26px;right:-26px;width:120px;height:auto;opacity:0.06">
+        <span style="display:inline-block;font-family:'Sansation',sans-serif;font-weight:700;font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;color:#0c7a83;background:#ccf0f2;padding:6px 11px;border-radius:100px;margin-bottom:18px;white-space:nowrap">Drop-in</span>
+        <h3 style="font-family:'Sansation',sans-serif;font-weight:700;font-size:23px;letter-spacing:-0.01em;margin:0 0 8px;color:#13191b">Coworking Sessions</h3>
+        <p style="font-family:'Merriweather',serif;font-style:italic;font-weight:400;font-size:16px;line-height:1.45;color:#059ea9;margin:0 0 14px">A room full of people getting real work done. Bring yours.</p>
+        <p style="font-size:15.5px;line-height:1.62;color:#46555d;margin:0">A standing block of time and a room full of people doing focused work. Show up, put your headphones on, get more done than you would alone.</p>
+      </div>
+
+      <div style="position:relative;background:#fff;border:1px solid #e6edf0;border-radius:18px;padding:30px 28px 30px;overflow:hidden;transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease" style-hover="transform:translateY(-4px);box-shadow:0 22px 40px -24px rgba(19,25,27,0.28);border-color:#aed9dd">
+        <img src="assets/logo-teal.png" alt="" aria-hidden="true" style="position:absolute;top:-26px;right:-26px;width:120px;height:auto;opacity:0.06">
+        <span style="display:inline-block;font-family:'Sansation',sans-serif;font-weight:700;font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;color:#0c7a83;background:#ccf0f2;padding:6px 11px;border-radius:100px;margin-bottom:18px;white-space:nowrap">Every 2 weeks</span>
+        <h3 style="font-family:'Sansation',sans-serif;font-weight:700;font-size:23px;letter-spacing:-0.01em;margin:0 0 8px;color:#13191b">Biweekly Socials</h3>
+        <p style="font-family:'Merriweather',serif;font-style:italic;font-weight:400;font-size:16px;line-height:1.45;color:#059ea9;margin:0 0 14px">Same people, no agenda, good food.</p>
+        <p style="font-size:15.5px;line-height:1.62;color:#46555d;margin:0">No pitch, no deadline. Every other week the same people you'd be working alongside show up for food, a drink, and a conversation that isn't about your next due date.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== MISSION (inverted) ===================== -->
+  <section style="position:relative;background:#10171a;color:#fff;overflow:hidden">
+    <img src="assets/logo-white.png" alt="" aria-hidden="true" style="position:absolute;top:50%;right:-60px;transform:translateY(-50%);width:min(46%,420px);height:auto;opacity:0.05">
+    <div style="position:absolute;inset:0;background:radial-gradient(700px 400px at 18% 30%,rgba(5,158,169,0.16),transparent 70%)"></div>
+    <div style="position:relative;max-width:1000px;margin:0 auto;padding:clamp(72px,9vw,128px) 24px">
+      <div style="font-family:'Sansation',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.16em;text-transform:uppercase;color:#3fd0da;margin-bottom:26px">Why we exist</div>
+      <p style="font-family:'Merriweather',serif;font-weight:400;font-size:clamp(26px,3.6vw,44px);line-height:1.28;letter-spacing:-0.01em;margin:0;max-width:880px">Good intentions are the starting point. We care about the <span style="color: rgb(63, 208, 218);">strategy and the execution</span> it takes to actually move the needle. We'd rather test an idea than just discuss it.</p>
+    </div>
+  </section>
+
+  <!-- ===================== MENTORS ===================== -->
+  <section id="mentors" style="max-width:1200px;margin:0 auto;padding:clamp(64px,8vw,112px) 24px">
+    <div style="max-width:680px;margin-bottom:clamp(32px,4vw,52px)">
+      <div style="font-family:'Sansation',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.16em;text-transform:uppercase;color:#059ea9;margin-bottom:14px">Mentorship</div>
+      <h2 style="font-family:'Sansation',sans-serif;font-weight:700;font-size:clamp(30px,4vw,46px);line-height:1.04;letter-spacing:-0.015em;margin:0 0 16px;color:#13191b">Real people, further down the path.</h2>
+      <p style="font-size:clamp(16px,1.5vw,18px);line-height:1.6;color:#46555d;margin:0 0 14px">Every mentor here has actually done the thing; research, policy, building. They give straight answers about what a path looks like, not a pep talk.</p>
+      <div style="display:inline-flex;align-items:center;gap:9px;font-size:14px;font-weight:600;color:#0c7a83;background:#ccf0f2;padding:9px 15px;border-radius:100px"><span style="width:7px;height:7px;border-radius:50%;background:#059ea9"></span>We're confirming our 2026 mentor line-up — these slots fill in below.</div>
+    </div>
+
+    <!-- EDIT: each card below is a mentor slot. Drop a photo, then edit the name, role, expertise tag and bio inline. Duplicate a card to add more. -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:20px">
+
+      <div style="background:#fff;border:1px solid #e6edf0;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:transform .22s ease,box-shadow .22s ease" style-hover="transform:translateY(-4px);box-shadow:0 22px 40px -24px rgba(19,25,27,0.26)">
+        <img src="assets/mentors/mentor-1.jpg" alt="Mentor 1 photo" style="width:100%;height:220px;object-fit:cover;background:#ccf0f2;display:block">
+        <div style="padding:22px 24px 26px">
+          <span style="display:inline-block;font-family:'Sansation',sans-serif;font-weight:700;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#0c7a83;background:#ccf0f2;padding:5px 10px;border-radius:100px;margin-bottom:14px">AI safety research</span>
+          <h3 style="font-family:'Sansation',sans-serif;font-weight:700;font-size:20px;margin:0 0 3px;color:#13191b">David Leech<br></h3>
+          <div style="font-size:14px;color:#6a7880;margin-bottom:12px">Senior Lecturer · UoB</div>
+          <p style="font-size:15px;line-height:1.6;color:#46555d;margin:0 0 14px">David is currently researching the role of religious leaders in ensuring AI goes well. David has previously done extensive research on the nature of religious experience.</p>
+          <a href="https://research-information.bris.ac.uk/en/persons/david-leech/" style="font-family:'Sansation',sans-serif;font-weight:700;font-size:13.5px;color:#059ea9;text-decoration:none">Bristol Profile ↗</a>
+        </div>
+      </div>
+
+      <div style="background:#fff;border:1px solid #e6edf0;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:transform .22s ease,box-shadow .22s ease" style-hover="transform:translateY(-4px);box-shadow:0 22px 40px -24px rgba(19,25,27,0.26)">
+        <img src="assets/mentors/mentor-2.jpg" alt="Mentor 2 photo" style="width:100%;height:220px;object-fit:cover;background:#ccf0f2;display:block">
+        <div style="padding:22px 24px 26px">
+          <span style="display:inline-block;font-family:'Sansation',sans-serif;font-weight:700;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#0c7a83;background:#ccf0f2;padding:5px 10px;border-radius:100px;margin-bottom:14px">GRANTMAKING</span>
+          <h3 style="font-family:'Sansation',sans-serif;font-weight:700;font-size:20px;margin:0 0 3px;color:#13191b">Erin Robertson<br></h3>
+          <div style="font-size:14px;color:#6a7880;margin-bottom:12px">AI Safety Grantmaker · Coefficient Giving</div>
+          <p style="font-size:15px;line-height:1.6;color:#46555d;margin:0 0 14px">Erin currently funds new AI Safety Organisations. Before this, she ran LASR Labs, a technical AI Safety research program. Erin was previously EA Bristol President.</p>
+          <a href="https://uk.linkedin.com/in/erin-robertson3" style="font-family:'Sansation',sans-serif;font-weight:700;font-size:13.5px;color:#059ea9;text-decoration:none">LinkedIn ↗</a>
+        </div>
+      </div>
+
+      <div style="background:#fff;border:1px solid #e6edf0;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:transform .22s ease,box-shadow .22s ease" style-hover="transform:translateY(-4px);box-shadow:0 22px 40px -24px rgba(19,25,27,0.26)">
+        <img src="assets/mentors/mentor-3.jpg" alt="Mentor 3 photo" style="width:100%;height:220px;object-fit:cover;background:#ccf0f2;display:block">
+        <div style="padding: 22px 24px 26px; position: relative">
+          <span style="display:inline-block;font-family:'Sansation',sans-serif;font-weight:700;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#0c7a83;background:#ccf0f2;padding:5px 10px;border-radius:100px;margin-bottom:14px">COMMUNITY BUILDING</span>
+          <h3 style="font-family:'Sansation',sans-serif;font-weight:700;font-size:20px;margin:0 0 3px;color:#13191b">Sam Smith</h3>
+          <div style="font-size:14px;color:#6a7880;margin-bottom:12px">Program Director · Leaf</div>
+          <p style="font-size:15px;line-height:1.6;color:#46555d;margin:0 0 14px">Sam runs Leaf, an EA summer program for High-Schoolers. Sam &nbsp;also is a Generator Resident in Berkeley, California, working to expand Non-Trivial. Sam was also previously EA Bristol President.</p>
+          <a href="#" style="font-family:'Sansation',sans-serif;font-weight:700;font-size:13.5px;color:#059ea9;text-decoration:none">EA Forum↗</a>
+        <div style="box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 96px; height: 96px; background-color: #b6b0a7; border-radius: 50%; position: absolute; left: 267px; top: 89px; width: 96px; height: 96px"></div></div>
+      </div>
+
+      <div style="background:#fff;border:1px solid #e6edf0;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:transform .22s ease,box-shadow .22s ease" style-hover="transform:translateY(-4px);box-shadow:0 22px 40px -24px rgba(19,25,27,0.26)">
+        <img src="assets/mentors/mentor-4.jpg" alt="Mentor 4 photo" style="width:100%;height:220px;object-fit:cover;background:#ccf0f2;display:block">
+        <div style="padding:22px 24px 26px">
+          <span style="display:inline-block;font-family:'Sansation',sans-serif;font-weight:700;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#0c7a83;background:#ccf0f2;padding:5px 10px;border-radius:100px;margin-bottom:14px">COMMUNITY BUILDING</span>
+          <h3 style="font-family:'Sansation',sans-serif;font-weight:700;font-size:20px;margin:0 0 3px;color:#13191b">Jian Xin Lim</h3>
+          <div style="box-sizing: border-box; display: flex; flex-direction: column; gap: 12px"><div style="font-size: 14px; color: #6a7880; margin-bottom: 12px">Program Organiser · EA Cambridge</div></div>
+          <p style="font-size:15px;line-height:1.6;color:#46555d;margin:0 0 14px">Jian Xin mentors and helps facilitate projects at EA Cambridge, the second largest EA Society in the country.</p>
+          <a href="https://www.linkedin.com/in/jian-xin-lim🔸-87826a182/" style="font-family:'Sansation',sans-serif;font-weight:700;font-size:13.5px;color:#059ea9;text-decoration:none">LinkedIn ↗</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- divider motif -->
+  <div style="display:flex;align-items:center;gap:18px;max-width:1100px;margin:0 auto;padding:0 24px">
+    <div style="flex:1;height:1px;background:#e2eaee"></div>
+    <img src="assets/logo-teal.png" alt="" aria-hidden="true" style="width:24px;height:auto;opacity:0.45">
+    <div style="flex:1;height:1px;background:#e2eaee"></div>
+  </div>
+
+  <!-- ===================== LEADERSHIP / COMMITTEE ===================== -->
+  <section id="team" style="max-width:1200px;margin:0 auto;padding:clamp(64px,8vw,112px) 24px">
+    <div style="max-width:680px;margin-bottom:clamp(32px,4vw,52px)">
+      <div style="font-family:'Sansation',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.16em;text-transform:uppercase;color:#059ea9;margin-bottom:14px">The committee</div>
+      <h2 style="font-family:'Sansation',sans-serif;font-weight:700;font-size:clamp(30px,4vw,46px);line-height:1.04;letter-spacing:-0.015em;margin:0 0 16px;color:#13191b">Who's running it.</h2>
+      <p style="font-size:clamp(16px,1.5vw,18px);line-height:1.6;color:#46555d;margin:0">Six students, all reachable. Drop us a message; we mean the "always up for a chat" part.</p>
+    </div>
+
+    <!-- EDIT: committee cards. Drop a photo, edit name/role/bio inline. -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:20px">
+
+      <div style="background:#fff;border:1px solid #e6edf0;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:transform .22s ease,box-shadow .22s ease" style-hover="transform:translateY(-4px);box-shadow:0 22px 40px -24px rgba(19,25,27,0.26)">
+        <img src="assets/team/chris.jpg" alt="Chris photo" style="width:100%;height:240px;object-fit:cover;background:#ccf0f2;display:block">
+        <div style="padding:22px 24px 26px">
+          <span style="display:inline-block;font-family:'Sansation',sans-serif;font-weight:700;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#0c7a83;background:#ccf0f2;padding:5px 10px;border-radius:100px;margin-bottom:13px">President</span>
+          <h3 style="font-family:'Sansation',sans-serif;font-weight:700;font-size:20px;margin:0 0 10px;color:#13191b">Chris</h3>
+          <p style="font-size:15px;line-height:1.62;color:#46555d;margin:0 0 14px">Second-year Maths student. Researched the state of the AI safety field, analysing a dataset of 600+ alumni; if you need contacts in AI safety, he's the guy. Outside of this, loves photography and exploring random places. Always up for a chat.</p>
+          <a href="https://chrisclay.net" target="_blank" rel="noopener" style="font-family:'Sansation',sans-serif;font-weight:700;font-size:13.5px;color:#059ea9;text-decoration:none">chrisclay.net ↗</a>
+        </div>
+      </div>
+
+      <div style="background:#fff;border:1px solid #e6edf0;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:transform .22s ease,box-shadow .22s ease" style-hover="transform:translateY(-4px);box-shadow:0 22px 40px -24px rgba(19,25,27,0.26)">
+        <img src="assets/team/alexandra.jpg" alt="Alexandra photo" style="width:100%;height:240px;object-fit:cover;background:#ccf0f2;display:block">
+        <div style="padding:22px 24px 26px">
+          <span style="display:inline-block;font-family:'Sansation',sans-serif;font-weight:700;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#0c7a83;background:#ccf0f2;padding:5px 10px;border-radius:100px;margin-bottom:13px">Vice President</span>
+          <h3 style="font-family:'Sansation',sans-serif;font-weight:700;font-size:20px;margin:0 0 10px;color:#13191b">Alexandra</h3>
+          <p style="font-size:15px;line-height:1.62;color:#46555d;margin:0">Psychology PhD student working at the intersection of psychology and AI. Serial founder: Synthetic Psychology Group, Fairy's Heart and the Sheffield Entrepreneurship society. Runs our mentorship program.</p>
+        </div>
+      </div>
+
+      <div style="background:#fff;border:1px solid #e6edf0;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:transform .22s ease,box-shadow .22s ease" style-hover="transform:translateY(-4px);box-shadow:0 22px 40px -24px rgba(19,25,27,0.26)">
+        <img src="assets/team/mia.jpg" alt="Mia photo" style="width:100%;height:240px;object-fit:cover;background:#ccf0f2;display:block">
+        <div style="padding:22px 24px 26px">
+          <span style="display:inline-block;font-family:'Sansation',sans-serif;font-weight:700;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#0c7a83;background:#ccf0f2;padding:5px 10px;border-radius:100px;margin-bottom:13px">Secretary</span>
+          <h3 style="font-family:'Sansation',sans-serif;font-weight:700;font-size:20px;margin:0 0 10px;color:#13191b">Mia</h3>
+          <p style="font-size:15px;line-height:1.62;color:#46555d;margin:0">Third-year Politics &amp; IR student, deeply involved in politics. National Elections Officer for the Young Liberals, coordinating young candidates nationally with the main party. Passionate about ensuring AI goes well, and runs our Coworking Sessions. Outside of this, loves crocheting and reading.</p>
+        </div>
+      </div>
+
+      <div style="background:#fff;border:1px solid #e6edf0;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:transform .22s ease,box-shadow .22s ease" style-hover="transform:translateY(-4px);box-shadow:0 22px 40px -24px rgba(19,25,27,0.26)">
+        <img src="assets/team/ed.jpg" alt="Ed photo" style="width:100%;height:240px;object-fit:cover;background:#ccf0f2;display:block">
+        <div style="padding:22px 24px 26px">
+          <span style="display:inline-block;font-family:'Sansation',sans-serif;font-weight:700;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#0c7a83;background:#ccf0f2;padding:5px 10px;border-radius:100px;margin-bottom:13px">Treasurer</span>
+          <h3 style="font-family:'Sansation',sans-serif;font-weight:700;font-size:20px;margin:0 0 10px;color:#13191b">Ed</h3>
+          <p style="font-size:15px;line-height:1.62;color:#46555d;margin:0">Third-year Physics &amp; Philosophy student. Non-Trivial Fellow and Facilitator, and our philosophy lead. Outside of this you'll find him playing trumpet; he led the Brass Band last year, and plays in Jazz Funk &amp; Soul Society, Bristol Hornstars, Orchestra and a stack of classical ensembles.</p>
+        </div>
+      </div>
+
+      <div style="background:#fff;border:1px solid #e6edf0;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:transform .22s ease,box-shadow .22s ease" style-hover="transform:translateY(-4px);box-shadow:0 22px 40px -24px rgba(19,25,27,0.26)">
+        <img src="assets/team/alex.jpg" alt="Alex photo" style="width:100%;height:240px;object-fit:cover;background:#ccf0f2;display:block">
+        <div style="padding:22px 24px 26px">
+          <span style="display:inline-block;font-family:'Sansation',sans-serif;font-weight:700;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#0c7a83;background:#ccf0f2;padding:5px 10px;border-radius:100px;margin-bottom:13px">Global Careers Secretary</span>
+          <h3 style="font-family:'Sansation',sans-serif;font-weight:700;font-size:20px;margin:0 0 10px;color:#13191b">Alex</h3>
+          <p style="font-size:15px;line-height:1.62;color:#46555d;margin:0">Second-year Social Policy student. Founder of Noctem Consulting and excited about the environment. Co-leading the Intro Program.</p>
+        </div>
+      </div>
+
+      <div style="background:#fff;border:1px solid #e6edf0;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:transform .22s ease,box-shadow .22s ease" style-hover="transform:translateY(-4px);box-shadow:0 22px 40px -24px rgba(19,25,27,0.26)">
+        <img src="assets/team/anirdesh.jpg" alt="Anirdesh photo" style="width:100%;height:240px;object-fit:cover;background:#ccf0f2;display:block">
+        <div style="padding:22px 24px 26px">
+          <span style="display:inline-block;font-family:'Sansation',sans-serif;font-weight:700;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#0c7a83;background:#ccf0f2;padding:5px 10px;border-radius:100px;margin-bottom:13px">AI Safety Lead</span>
+          <h3 style="font-family:'Sansation',sans-serif;font-weight:700;font-size:20px;margin:0 0 10px;color:#13191b">Anirdesh</h3>
+          <p style="font-size:15px;line-height:1.62;color:#46555d;margin:0">Third-year Maths &amp; Computer Science student. Doing funded alignment research on Bayesian updating in models with Aeden Ewart (ex-Anthropic fellow, ex-EA Bristol). Runs BAISC, the AI safety group at Bristol.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== GET INVOLVED ===================== -->
+  <section id="involved" style="max-width:1200px;margin:0 auto;padding:0 24px clamp(72px,9vw,120px)">
+    <div style="position:relative;overflow:hidden;background:#ccf0f2;border-radius:28px;padding:clamp(40px,6vw,76px) clamp(28px,5vw,72px)">
+      <img src="assets/logo-teal.png" alt="" aria-hidden="true" style="position:absolute;bottom:-50px;right:-40px;width:min(40%,300px);height:auto;opacity:0.12">
+      <div style="position:relative;max-width:640px">
+        <div style="display:inline-flex;align-items:center;gap:9px;font-family:'Sansation',sans-serif;font-weight:700;font-size:12.5px;letter-spacing:0.06em;color:#0c5860;background:#fff;padding:8px 15px;border-radius:100px;margin-bottom:24px"><span style="width:7px;height:7px;border-radius:50%;background:#059ea9"></span>Next intro project intake — applications open September 2026</div>
+        <h2 style="font-family:'Sansation',sans-serif;font-weight:700;font-size:clamp(30px,4.2vw,48px);line-height:1.04;letter-spacing:-0.015em;margin:0 0 18px;color:#0a3f44">Worth an hour of your week?</h2>
+        <p style="font-size:clamp(16px,1.6vw,19px);line-height:1.6;color:#2c5258;margin:0 0 30px;max-width:540px">Come to a social, sit in on a coworking session, or apply for the intro project. The lowest-effort way in is just to show up once.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:14px">
+          <a href="#" style="font-family:'Sansation',sans-serif;font-weight:700;font-size:16px;color:#fff;background:#059ea9;padding:15px 30px;border-radius:11px;text-decoration:none;white-space:nowrap;box-shadow:0 10px 24px -10px rgba(5,158,169,0.6)" style-hover="background:#047d86">Apply to the intro project</a>
+          <a href="#" style="font-family:'Sansation',sans-serif;font-weight:700;font-size:16px;color:#0c5860;background:#fff;padding:15px 30px;border-radius:11px;text-decoration:none;white-space:nowrap" style-hover="background:#eafafb">Join the mailing list</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer style="background:#13191b;color:#fff">
+    <div style="max-width:1200px;margin:0 auto;padding:clamp(48px,6vw,72px) 24px clamp(28px,3vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:36px;align-items:start">
+      <div>
+        <div style="display:flex;align-items:center;gap:11px;margin-bottom:16px">
+          <img src="assets/logo-white.png" alt="EA Bristol" style="width:34px;height:34px;object-fit:contain">
+          <span style="font-family:'Sansation',sans-serif;font-weight:700;font-size:18px">EA Bristol</span>
+        </div>
+        <p style="font-size:14.5px;line-height:1.6;color:#9aa7ac;margin:0;max-width:300px">A society for people who'd rather test an idea than just discuss it. University of Bristol.</p>
+      </div>
+      <div>
+        <div style="font-family:'Sansation',sans-serif;font-weight:700;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:#5fd2db;margin-bottom:16px">Explore</div>
+        <div style="display:flex;flex-direction:column;gap:11px">
+          <a onClick="{{ goPrograms }}" style="cursor:pointer;font-size:15px;color:#cfd8db;text-decoration:none" style-hover="color:#fff">Programs</a>
+          <a onClick="{{ goMentors }}" style="cursor:pointer;font-size:15px;color:#cfd8db;text-decoration:none" style-hover="color:#fff">Mentors</a>
+          <a onClick="{{ goTeam }}" style="cursor:pointer;font-size:15px;color:#cfd8db;text-decoration:none" style-hover="color:#fff">The committee</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'Sansation',sans-serif;font-weight:700;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:#5fd2db;margin-bottom:16px">Find us</div>
+        <div style="display:flex;flex-direction:column;gap:11px">
+          <a href="https://forum.effectivealtruism.org" target="_blank" rel="noopener" style="font-size:15px;color:#cfd8db;text-decoration:none" style-hover="color:#fff">EA Forum ↗</a>
+          <a href="#" target="_blank" rel="noopener" style="font-size:15px;color:#cfd8db;text-decoration:none" style-hover="color:#fff">Instagram ↗</a>
+          <a href="mailto:hello@eabristol.org" style="font-size:15px;color:#cfd8db;text-decoration:none" style-hover="color:#fff">hello@eabristol.org</a>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1200px;margin:0 auto;padding:20px 24px;border-top:1px solid #242c30;font-size:13px;color:#6f7c81">© 2026 Effective Altruism Bristol · Edit the email and socials above to your real handles.</div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { menuOpen: false, isMobile: false };
+
+  componentDidMount() {
+    this._onResize = () => {
+      const m = window.innerWidth < 820;
+      if (m !== this.state.isMobile) this.setState({ isMobile: m, menuOpen: m ? this.state.menuOpen : false });
+    };
+    this._onResize();
+    window.addEventListener('resize', this._onResize);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this._onResize);
+  }
+
+  scrollToId(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const y = el.getBoundingClientRect().top + window.scrollY - 70;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+    this.setState({ menuOpen: false });
+  }
+
+  renderVals() {
+    const nav = (id) => () => this.scrollToId(id);
+    return {
+      menuOpen: this.state.menuOpen,
+      isMobile: this.state.isMobile,
+      isDesktop: !this.state.isMobile,
+      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
+      goHero: nav('top'),
+      goPrograms: nav('programs'),
+      goMentors: nav('mentors'),
+      goTeam: nav('team'),
+      goInvolved: nav('involved'),
+    };
+  }
+}
+</script>
+</body>
+</html>
